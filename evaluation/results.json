@@ -1,0 +1,737 @@
+{
+  "results": [
+    {
+      "scenario_id": "S01",
+      "category": "no_conflict",
+      "description": "2 students arranging a study session for an upcoming midterm",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Monday",
+          "start_time": "15:00",
+          "end_time": "17:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Wednesday",
+            "start_time": "13:00",
+            "end_time": "15:00"
+          }
+        ],
+        "notes": "Monday overlap 15:00-17:00 and Wednesday overlap 13:00-15:00 both valid. Monday scored higher by ranking heuristic."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Monday",
+          "start_time": "15:00",
+          "end_time": "17:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 25.81
+    },
+    {
+      "scenario_id": "S02",
+      "category": "no_conflict",
+      "description": "3-person tutorial group wants to review lecture notes before Friday quiz",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Thursday",
+          "start_time": "16:00",
+          "end_time": "18:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Tuesday",
+            "start_time": "17:00",
+            "end_time": "19:00"
+          }
+        ],
+        "notes": "Thursday 16:00-18:00 is the 3-way intersection. Tuesday 17:00-19:00 also valid."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Tuesday",
+          "start_time": "17:00",
+          "end_time": "19:00"
+        },
+        "negotiation_rounds": 1,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Sophia",
+            "message": "I noticed that both Liam and Sophia have overlapping availability on Thursday from 16:00 to 18:00. I think adjusting Sophia's Thursday slot to this time could create a full N-way overlap with Liam.",
+            "result": "accepted"
+          }
+        ],
+        "first_target_asked": "Sophia",
+        "participant_count": 3,
+        "conflicts_detected": [
+          "Priya's constraint '['must be after 6pm']' eliminates all their available slots"
+        ]
+      },
+      "duration_seconds": 41.95
+    },
+    {
+      "scenario_id": "S03",
+      "category": "no_conflict",
+      "description": "2 lab partners need to complete a chemistry pre-lab together",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Monday",
+          "start_time": "10:00",
+          "end_time": "12:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Friday",
+            "start_time": "10:00",
+            "end_time": "11:00"
+          }
+        ],
+        "notes": "Monday overlap 10:00-12:00 (2 hours) preferred over Friday overlap 10:00-11:00 (1 hour, below typical 60-min threshold only just)."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Monday",
+          "start_time": "10:00",
+          "end_time": "12:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 19.93
+    },
+    {
+      "scenario_id": "S04",
+      "category": "no_conflict",
+      "description": "4-person club executive committee needs to plan semester events",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Wednesday",
+          "start_time": "15:00",
+          "end_time": "17:00"
+        },
+        "alternate_slots": [],
+        "notes": "4-way overlap is Wednesday 15:00-17:00. Nadia is the bottleneck (starts 15:00)."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Wednesday",
+          "start_time": "15:00",
+          "end_time": "16:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 4,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 22.12
+    },
+    {
+      "scenario_id": "S05",
+      "category": "no_conflict",
+      "description": "2 roommates planning a grocery run before the weekend",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Friday",
+          "start_time": "16:00",
+          "end_time": "18:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Saturday",
+            "start_time": "11:00",
+            "end_time": "14:00"
+          }
+        ],
+        "notes": "Friday preferred by ranking heuristic. Saturday 11:00-14:00 also fully valid."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Friday",
+          "start_time": "16:00",
+          "end_time": "18:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 19.85
+    },
+    {
+      "scenario_id": "S06",
+      "category": "negotiable",
+      "description": "3 students for a group project meeting — one has evening-only constraint due to part-time job ending at 6pm",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "Bob",
+        "expected_slot": {
+          "day": "Tuesday",
+          "start_time": "18:00",
+          "end_time": "19:00"
+        },
+        "alternate_slots": [],
+        "notes": "Alice's constraint eliminates all overlaps. Bob (flex 8) should be asked to shift. Tuesday 18:00-19:00 is Alice∩Bob∩Carol when constraint applied."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Tuesday",
+          "start_time": "18:00",
+          "end_time": "19:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 3,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 25.53
+    },
+    {
+      "scenario_id": "S07",
+      "category": "negotiable",
+      "description": "2 classmates — one can only do mornings, the other just barely overlaps in the midday gap",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "Ryan",
+        "expected_slot": {
+          "day": "Thursday",
+          "start_time": "12:00",
+          "end_time": "13:00"
+        },
+        "alternate_slots": [],
+        "notes": "Raw overlap is 12:00-13:00 exactly (1 hour). No negotiation needed if 60-min min_duration is used — conflict checker should find it directly."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Thursday",
+          "start_time": "12:00",
+          "end_time": "13:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 19.64
+    },
+    {
+      "scenario_id": "S08",
+      "category": "negotiable",
+      "description": "Study group of 3 — two overlap perfectly but the third only starts when they end",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "Carla",
+        "expected_slot": {
+          "day": "Tuesday",
+          "start_time": "13:00",
+          "end_time": "14:00"
+        },
+        "alternate_slots": [],
+        "notes": "Aisha∩Ben = 13:00-14:00. Carla starts at 15:00 so no 3-way overlap. Carla (flex 9) asked to shift start earlier. Post-acceptance slot = 13:00-14:00."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Tuesday",
+          "start_time": "13:00",
+          "end_time": "14:00"
+        },
+        "negotiation_rounds": 1,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Carla",
+            "message": "Carla can adjust her slot from 15:00-18:00 to 13:00-17:00 to create a full N-way overlap with Aisha and Ben from 13:00-14:00.",
+            "result": "accepted"
+          }
+        ],
+        "first_target_asked": "Carla",
+        "participant_count": 3,
+        "conflicts_detected": [
+          "Participants have overlapping days but no overlapping time blocks",
+          "  Example (Tuesday): Aisha: 10:00-14:00; Ben: 13:00-17:00; Carla: 15:00-18:00"
+        ]
+      },
+      "duration_seconds": 40.21
+    },
+    {
+      "scenario_id": "S09",
+      "category": "negotiable",
+      "description": "Research team meeting — senior professor has strict must-leave-by constraint",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Wednesday",
+          "start_time": "11:00",
+          "end_time": "12:00"
+        },
+        "alternate_slots": [],
+        "notes": "3-way overlap 11:00-12:00 before Prof. Chen's hard cutoff. No negotiation needed."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Wednesday",
+          "start_time": "10:00",
+          "end_time": "11:59"
+        },
+        "negotiation_rounds": 1,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Diego",
+            "message": "Dear Diego, I noticed that you have overlapping times with Prof. Chen and Hana. Could you please adjust your start time to avoid these conflicts? Your flexibility score is the highest among all participants, making it easier to make a small adjustment.",
+            "result": "accepted"
+          }
+        ],
+        "first_target_asked": "Diego",
+        "participant_count": 3,
+        "conflicts_detected": [
+          "Participants have overlapping days but no overlapping time blocks",
+          "  Example (Wednesday): Prof. Chen: 10:00-11:59; Diego: 11:00-15:00; Hana: 10:00-13:00"
+        ]
+      },
+      "duration_seconds": 37.02
+    },
+    {
+      "scenario_id": "S10",
+      "category": "negotiable",
+      "description": "4-person capstone project group — one member has class conflict in the afternoon",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Monday",
+          "start_time": "11:00",
+          "end_time": "12:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Friday",
+            "start_time": "10:00",
+            "end_time": "11:00"
+          }
+        ],
+        "notes": "Monday 4-way overlap 11:00-12:00 satisfies Zoe's before-noon constraint. Friday 10:00-11:00 also works."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Monday",
+          "start_time": "11:00",
+          "end_time": "12:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 4,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 23.78
+    },
+    {
+      "scenario_id": "S11",
+      "category": "negotiable",
+      "description": "Campus club treasurer and president scheduling a budget review — treasurer works evenings",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "President Emma",
+        "expected_slot": {
+          "day": "Tuesday",
+          "start_time": "17:00",
+          "end_time": "18:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Thursday",
+            "start_time": "17:00",
+            "end_time": "18:00"
+          }
+        ],
+        "notes": "Tuesday raw overlap 17:00-18:00 satisfies Noah's constraint. Emma (flex 5) is higher than Noah (flex 4) so Emma asked. Actually overlap exists directly — might not need negotiation if constraint checker applied to raw overlap."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Tuesday",
+          "start_time": "17:00",
+          "end_time": "18:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 21.8
+    },
+    {
+      "scenario_id": "S12",
+      "category": "negotiable",
+      "description": "3 friends planning a weekly gym session — one is a night owl who never does mornings",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Wednesday",
+          "start_time": "19:00",
+          "end_time": "20:00"
+        },
+        "alternate_slots": [],
+        "notes": "Wednesday 3-way overlap 19:00-20:00 satisfies Max's after-6pm constraint."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Wednesday",
+          "start_time": "18:00",
+          "end_time": "20:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 1,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 20.18
+    },
+    {
+      "scenario_id": "S13",
+      "category": "negotiable",
+      "description": "2-person peer tutoring session — tutor has back-to-back classes until 3pm",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Monday",
+          "start_time": "15:00",
+          "end_time": "16:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Wednesday",
+            "start_time": "16:00",
+            "end_time": "17:00"
+          }
+        ],
+        "notes": "Monday 15:00-16:00 and Wednesday 16:00-17:00 both valid 1-hour slots."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Wednesday",
+          "start_time": "16:00",
+          "end_time": "17:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 23.34
+    },
+    {
+      "scenario_id": "S14",
+      "category": "impossible",
+      "description": "Two students with mutually exclusive time constraints — one morning-only, one afternoon-only",
+      "ground_truth": {
+        "should_resolve": false,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "Jordan",
+        "expected_slot": null,
+        "alternate_slots": [],
+        "notes": "Constraints are mutually exclusive. Both have very low flexibility so negotiation will fail. System should exhaust 3 rounds and report impossible."
+      },
+      "system_output": {
+        "status": "negotiation_success",
+        "final_slot": null,
+        "negotiation_rounds": 3,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Jordan",
+            "message": "Jordan, your availability on Monday is currently scheduled from 13:00 to 17:00. I suggest adjusting your schedule to end by 12:00 PM on Monday to overlap with Chris's schedule from 9:00 AM to 12:00 PM.",
+            "result": "rejected"
+          },
+          {
+            "round": 2,
+            "target": "Jordan",
+            "message": "I understand that we need to find a time where both of us can meet. Given that you have a higher flexibility score, could you please adjust your schedule to start a bit earlier on Monday and Tuesday? Specifically, moving your start time to 12:30 PM instead of 1 PM.",
+            "result": "rejected"
+          },
+          {
+            "round": 3,
+            "target": "Chris",
+            "message": "I noticed that both you and Jordan have available slots on Tuesday between 14:00 and 18:00. Could you please adjust your schedule to align with mine during this time? This would create a full N-way overlap.",
+            "result": "accepted"
+          }
+        ],
+        "first_target_asked": "Jordan",
+        "participant_count": 2,
+        "conflicts_detected": [
+          "Participants have overlapping days but no overlapping time blocks",
+          "  Example (Tuesday): Chris: 09:00-12:00; Jordan: 14:00-18:00",
+          "  Example (Monday): Chris: 09:00-12:00; Jordan: 13:00-17:00"
+        ]
+      },
+      "duration_seconds": 59.22
+    },
+    {
+      "scenario_id": "S15",
+      "category": "impossible",
+      "description": "3 students with no common available day at all across the week",
+      "ground_truth": {
+        "should_resolve": false,
+        "requires_negotiation": true,
+        "expected_negotiation_target": null,
+        "expected_slot": null,
+        "alternate_slots": [],
+        "notes": "Zero pairwise overlap across all days. All pairwise overlaps are empty. Negotiation cannot create overlap without actually changing days, which is beyond Phase 2 scope."
+      },
+      "system_output": {
+        "status": "negotiating",
+        "final_slot": null,
+        "negotiation_rounds": 1,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Anna",
+            "message": "Anna has the highest flexibility score of 4/10. If we adjust her schedule, she might be able to overlap with Bruno and Clara on a common day.",
+            "result": "accepted"
+          }
+        ],
+        "first_target_asked": "Anna",
+        "participant_count": 3,
+        "conflicts_detected": [
+          "No common days: Anna is only free on Tuesday/Monday, Bruno is only free on Thursday/Wednesday, Clara is only free on Saturday/Friday"
+        ]
+      },
+      "duration_seconds": 27.84
+    },
+    {
+      "scenario_id": "S16",
+      "category": "impossible",
+      "description": "All rigid participants with hard opposite constraints and no flexibility",
+      "ground_truth": {
+        "should_resolve": false,
+        "requires_negotiation": true,
+        "expected_negotiation_target": "Student Group",
+        "expected_slot": null,
+        "alternate_slots": [],
+        "notes": "Prof and TA have adjacent but non-overlapping constraint windows. Student Group could bridge 10-11 or 11-12 but not both simultaneously."
+      },
+      "system_output": {
+        "status": "negotiating",
+        "final_slot": null,
+        "negotiation_rounds": 3,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "TA Marcus",
+            "message": "I noticed that Prof. Williams and the Student Group both need to adjust their schedules to avoid overlapping with TA Marcus at 11:00-12:00. I think TA Marcus could move his time block to 13:00-15:00 to create a full overlap with both Prof. Williams and the Student Group.",
+            "result": "rejected"
+          },
+          {
+            "round": 2,
+            "target": "Student Group",
+            "message": "Please adjust your time slot from Friday 10:00-12:00 to Friday 10:00-11:00 so that there's a full overlap with Prof. Williams.",
+            "result": "rejected"
+          },
+          {
+            "round": 3,
+            "target": "TA Marcus",
+            "message": "TA Marcus could adjust his slot to start earlier to create an overlap with the Student Group and Prof. Williams.",
+            "result": "rejected"
+          }
+        ],
+        "first_target_asked": "TA Marcus",
+        "participant_count": 3,
+        "conflicts_detected": [
+          "Participants have overlapping days but no overlapping time blocks",
+          "  Example (Friday): Prof. Williams: 09:00-11:00; TA Marcus: 11:00-13:00; Student Group: 10:00-12:00"
+        ]
+      },
+      "duration_seconds": 1441.78
+    },
+    {
+      "scenario_id": "S17",
+      "category": "impossible",
+      "description": "Department meeting where all faculty have completely different day preferences",
+      "ground_truth": {
+        "should_resolve": false,
+        "requires_negotiation": true,
+        "expected_negotiation_target": null,
+        "expected_slot": null,
+        "alternate_slots": [],
+        "notes": "Each faculty member is on a completely different day. No pairwise overlaps exist. All have low flexibility so negotiation will fail after 3 rounds."
+      },
+      "system_output": {
+        "status": "negotiating",
+        "final_slot": null,
+        "negotiation_rounds": 3,
+        "negotiation_history": [
+          {
+            "round": 1,
+            "target": "Dr. Lee",
+            "message": "I would like to adjust Dr. Lee's time to Friday from 13:00-16:00 to 14:00-15:00 to see if we can find a common slot.",
+            "result": "rejected"
+          },
+          {
+            "round": 2,
+            "target": "Dr. Lee",
+            "message": "Suggest adjusting Dr. Lee's time on Friday to 12:00-14:00 to see if it aligns with others' availability.",
+            "result": "rejected"
+          },
+          {
+            "round": 3,
+            "target": "Dr. Lee",
+            "message": "Please adjust your time slot to Friday 13:00-16:00 to create a full N-way overlap with Dr. Patel on Monday, Dr. Kim on Tuesday, and Dr. Santos on Thursday.",
+            "result": "rejected"
+          }
+        ],
+        "first_target_asked": "Dr. Lee",
+        "participant_count": 4,
+        "conflicts_detected": [
+          "No common days: Dr. Patel is only free on Monday, Dr. Kim is only free on Tuesday, Dr. Santos is only free on Thursday, Dr. Lee is only free on Friday"
+        ]
+      },
+      "duration_seconds": 1569.2
+    },
+    {
+      "scenario_id": "S18",
+      "category": "edge_case",
+      "description": "Edge case: exactly 60-minute overlap — tests minimum duration boundary",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Wednesday",
+          "start_time": "15:00",
+          "end_time": "16:00"
+        },
+        "alternate_slots": [],
+        "notes": "Exactly 60-minute overlap at 15:00-16:00. Should pass min_duration_minutes=60 check. Edge case for boundary testing."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Wednesday",
+          "start_time": "15:00",
+          "end_time": "16:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 21.68
+    },
+    {
+      "scenario_id": "S19",
+      "category": "edge_case",
+      "description": "Edge case: multiple equal-quality slots — tests ranking consistency",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Tuesday",
+          "start_time": "14:00",
+          "end_time": "16:00"
+        },
+        "alternate_slots": [
+          {
+            "day": "Wednesday",
+            "start_time": "14:00",
+            "end_time": "16:00"
+          },
+          {
+            "day": "Monday",
+            "start_time": "14:00",
+            "end_time": "16:00"
+          }
+        ],
+        "notes": "All 3 days are identical. Ranking heuristic should prefer Tuesday (score 1.0) > Wednesday (score 1.0) > Monday (score 0.8) per day_preference dict."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Tuesday",
+          "start_time": "14:00",
+          "end_time": "16:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 2,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 20.62
+    },
+    {
+      "scenario_id": "S20",
+      "category": "edge_case",
+      "description": "Complex real-world scenario: 3 students, mixed constraints, flexible member bridges gap",
+      "ground_truth": {
+        "should_resolve": true,
+        "requires_negotiation": false,
+        "expected_slot": {
+          "day": "Thursday",
+          "start_time": "11:00",
+          "end_time": "12:00"
+        },
+        "alternate_slots": [],
+        "notes": "3-way overlap 11:00-12:00 satisfies Wei's before-noon constraint. Mike is highly flexible but no negotiation needed — direct overlap exists."
+      },
+      "system_output": {
+        "status": "resolved",
+        "final_slot": {
+          "day": "Thursday",
+          "start_time": "11:00",
+          "end_time": "12:00"
+        },
+        "negotiation_rounds": 0,
+        "negotiation_history": [],
+        "first_target_asked": null,
+        "participant_count": 3,
+        "conflicts_detected": []
+      },
+      "duration_seconds": 25.53
+    }
+  ]
+}

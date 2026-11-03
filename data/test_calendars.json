@@ -1,0 +1,44 @@
+{
+  "scenarios": [
+    {
+      "name": "simple_two_people",
+      "description": "Two people with clear overlap",
+      "input": "Alice:\nMonday 2-4pm free\nTuesday 3-5pm free\n\nBob:\nMonday 3-5pm free\nTuesday 2-6pm free",
+      "expected_participants": 2,
+      "expected_common_slots": 2,
+      "should_resolve": true
+    },
+    {
+      "name": "complex_three_people",
+      "description": "Three people with narrow overlap window",
+      "input": "Alice:\nMonday 14:00-18:00 free\nWednesday 10:00-12:00 free\n\nBob:\nMonday 15:00-17:00 free\nTuesday 14:00-16:00 free\n\nCarol:\nMonday 16:00-19:00 free\nWednesday 11:00-13:00 free",
+      "expected_participants": 3,
+      "expected_common_slots": 2,
+      "should_resolve": true
+    },
+    {
+      "name": "ambiguous_times",
+      "description": "Mixed time formats",
+      "input": "Alice:\nmon 2pm-4pm\ntue 6-8 PM\n\nBob:\nMonday 15:00-17:00\nTuesday 18:00-20:00",
+      "expected_participants": 2,
+      "notes": "Should normalize 'mon'→'Monday', '2pm'→'14:00'"
+    },
+    {
+      "name": "invalid_no_overlap",
+      "description": "No common days at all",
+      "input": "Alice:\nMonday 2-4pm free\nTuesday 2-4pm free\n\nBob:\nWednesday 2-4pm free\nThursday 2-4pm free",
+      "expected_participants": 2,
+      "expected_common_slots": 0,
+      "should_resolve": false
+    },
+    {
+      "name": "constraint_conflict",
+      "description": "Conflicting time constraints",
+      "input": "Alice:\nMonday 2-8pm free\nConstraint: must be after 6pm\nFlexibility: 3\n\nBob:\nMonday 2-8pm free\nConstraint: must be before 5pm\nFlexibility: 4",
+      "expected_participants": 2,
+      "expected_common_slots": 0,
+      "should_resolve": false,
+      "notes": "Should detect impossible constraint conflict"
+    }
+  ]
+}

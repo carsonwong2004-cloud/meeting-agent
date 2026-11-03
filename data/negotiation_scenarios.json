@@ -1,0 +1,69 @@
+{
+  "scenarios": [
+    {
+      "id": "easy_high_flexibility",
+      "description": "One very flexible person, simple time shift needed",
+      "input": "Alice:\nMonday 14:00-16:00 free\nConstraint: must be after 6pm\nFlexibility: 3\n\nBob:\nMonday 14:00-20:00 free\nFlexibility: 9",
+      "expected_behavior": {
+        "should_resolve": true,
+        "expected_target": "Bob",
+        "expected_rounds": 1,
+        "reasoning": "Bob has very high flexibility (9/10), should accept on first ask"
+      }
+    },
+    
+    {
+      "id": "hard_low_flexibility",
+      "description": "All participants have low flexibility",
+      "input": "Alice:\nMonday 9:00-12:00 free\nConstraint: no afternoons\nFlexibility: 2\n\nBob:\nMonday 14:00-17:00 free\nConstraint: must be after 1pm\nFlexibility: 3\n\nCarol:\nTuesday 10:00-13:00 free\nFlexibility: 2",
+      "expected_behavior": {
+        "should_resolve": false,
+        "expected_rounds": 3,
+        "reasoning": "No common day, all rigid participants, likely all reject"
+      }
+    },
+    
+    {
+      "id": "multi_person_constraint",
+      "description": "3 people, negotiation requires multiple attempts",
+      "input": "Alice:\nMonday 14:00-18:00 free\nTuesday 18:00-20:00 free\nConstraint: must be after 6pm\nFlexibility: 4\n\nBob:\nMonday 14:00-19:00 free\nTuesday 14:00-19:00 free\nFlexibility: 8\n\nCarol:\nMonday 14:00-20:00 free\nTuesday 14:00-16:00 free\nFlexibility: 7",
+      "expected_behavior": {
+        "should_resolve": true,
+        "expected_target_first": "Bob",
+        "expected_target_second": "Carol",
+        "expected_rounds": 1,
+        "reasoning": "Bob or Carol should extend to 6pm+ on Monday (both flexible)"
+      }
+    },
+    
+    {
+      "id": "impossible_conflict",
+      "description": "Truly impossible constraints (opposite requirements)",
+      "input": "Alice:\nMonday 14:00-20:00 free\nConstraint: must be after 6pm\nFlexibility: 1\n\nBob:\nMonday 14:00-20:00 free\nConstraint: must be before 5pm\nFlexibility: 1",
+      "expected_behavior": {
+        "should_resolve": false,
+        "expected_rounds": 3,
+        "reasoning": "Constraints are mutually exclusive and both are rigid"
+      }
+    },
+    
+    {
+      "id": "one_flexible_saves_day",
+      "description": "One flexible person can bridge the gap",
+      "input": "Alice:\nWednesday 14:00-16:00 free\nFlexibility: 5\n\nBob:\nWednesday 17:00-19:00 free\nFlexibility: 4\n\nCarol:\nWednesday 14:00-19:00 free\nFlexibility: 9",
+      "expected_behavior": {
+        "should_resolve": true,
+        "expected_target": "Carol",
+        "expected_rounds": 1,
+        "reasoning": "No initial overlap between Alice & Bob, but Carol is highly flexible and free the entire range"
+      }
+    }
+  ],
+  
+  "evaluation_criteria": {
+    "success_rate": "Percentage of solvable conflicts that were resolved",
+    "efficiency": "Average negotiation rounds needed",
+    "fairness": "Distribution of who gets asked (should prefer flexible people)",
+    "persuasiveness": "Quality of negotiation messages (manual evaluation)"
+  }
+}

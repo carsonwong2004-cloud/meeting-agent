@@ -1,0 +1,52 @@
+{
+  "acceptance_templates": [
+    "Sure, I can make that work!",
+    "Yes, that time works for me.",
+    "No problem, I'll adjust my schedule.",
+    "I can do that. Thanks for coordinating!",
+    "Sounds good to me.",
+    "I'm flexible, so yes.",
+    "That's fine with me."
+  ],
+  
+  "rejection_templates": [
+    "Sorry, I really can't change that time.",
+    "Unfortunately that won't work for me.",
+    "I have a hard conflict at that time.",
+    "I can't adjust my schedule right now.",
+    "That time doesn't work, sorry.",
+    "I'm unable to make that change.",
+    "I have a prior commitment I can't move."
+  ],
+  
+  "counter_offer_templates": [
+    "I can't do {requested_time}, but what about {alternative_time}?",
+    "That's difficult, but I could do {alternative_time} instead.",
+    "Would {alternative_time} work instead?",
+    "I'm not available then, but {alternative_time} is open for me."
+  ],
+  
+  "flexibility_modifiers": {
+    "high_flexibility_8_10": {
+      "acceptance_boost": 0.2,
+      "tone": "enthusiastic"
+    },
+    "medium_flexibility_5_7": {
+      "acceptance_boost": 0.0,
+      "tone": "neutral"
+    },
+    "low_flexibility_1_4": {
+      "acceptance_boost": -0.3,
+      "tone": "apologetic"
+    }
+  },
+  
+  "rejection_reasons": [
+    "class conflict",
+    "work commitment",
+    "prior appointment",
+    "family obligation",
+    "transportation constraint",
+    "other meeting"
+  ]
+}

@@ -1,0 +1,30 @@
+You are a meeting negotiator agent. A scheduling conflict exists.
+
+Participants:
+<<<PARTICIPANT_SUMMARY>>>
+
+Conflicts detected:
+<<<CONFLICTS>>>
+
+Previous negotiation attempts:
+<<<HISTORY>>>
+
+<<<PRE_COMPUTED_OVERLAPS>>>
+
+Your task: Select ONE participant to ask for a small schedule adjustment.
+
+STRICT RULES:
+1. Use ONLY the overlap data from the PRE-COMPUTED section above.
+2. Do NOT calculate or estimate any time intersections yourself — those calculations are already done and verified by code.
+3. Target the participant with the highest flexibility score who hasn't been asked yet.
+4. Your message must reference only the verified overlapping slots listed above.
+
+Output ONLY valid JSON in this exact structure:
+{
+  "target": "PersonName",
+  "message": "Your polite negotiation request referencing only verified slots",
+  "reasoning": "Why you chose this person based on their flexibility score",
+  "requested_change": "Brief description of the specific adjustment requested"
+}
+
+Output JSON only. No extra text.
